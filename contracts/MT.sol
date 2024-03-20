@@ -1,45 +1,71 @@
-pragma solidity ^0.8.17;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Capped.sol";
-import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
+import "./IERC20.sol";
 
-contract OceanToken is ERC20Capped, ERC20Burnable {
-    address payable public owner;
-    uint256 public blockReward;
+contract ERC20 is IERC20 {
+    // event Transfer(address indexed from, address indexed to, uint256 value);
+    // event Approval(
+    //     address indexed owner, address indexed spender, uint256 value
+    // );
 
-    constructor(uint256 cap, uint256 reward) ERC20("OceanToken", "OCT") ERC20Capped(cap * (10 ** decimals())) {
-        owner = payable(msg.sender);
-        _mint(owner, 70000000 * (10 ** decimals()));
-        blockReward = reward * (10 ** decimals());
+    uint256 public totalSupply;
+    mapping(address => uint256) public balanceOf;
+    mapping(address => mapping(address => uint256)) public allowance;
+    string public name;
+    string public symbol;
+    uint8 public decimals;
+
+    constructor(string memory _name, string memory _symbol, uint8 _decimals) {
+        name = _name;
+        symbol = _symbol;
+        decimals = _decimals;
     }
 
-    function _mint(address account, uint256 amount) internal virtual override(ERC20Capped, ERC20) {
-        require(ERC20.totalSupply() + amount <= cap(), "ERC20Capped: cap exceeded");
-        super._mint(account, amount);
+    function transfer(address recipient, uint256 amount)
+        external
+        returns (bool)
+    {
+        balanceOf[msg.sender] -= amount;
+        balanceOf[recipient] += amount;
+        emit Transfer(msg.sender, recipient, amount);
+        return true;
     }
 
-    function _mintMinerReward() internal {
-        _mint(block.coinbase, blockReward);
+    function approve(address spender, uint256 amount) external returns (bool) {
+        allowance[msg.sender][spender] = amount;
+        emit Approval(msg.sender, spender, amount);
+        return true;
     }
 
-    function _beforeTokenTransfer(address from, address to, uint256 value) internal virtual override {
-        if(from != address(0) && to != block.coinbase && block.coinbase != address(0) && ERC20.totalSupply() + blockReward <= cap()) {
-            _mintMinerReward();
-        }
-        super._beforeTokenTransfer(from, to, value);
+    function transferFrom(address sender, address recipient, uint256 amount)
+        external
+        returns (bool)
+    {
+        allowance[sender][msg.sender] -= amount;
+        balanceOf[sender] -= amount;
+        balanceOf[recipient] += amount;
+        emit Transfer(sender, recipient, amount);
+        return true;
     }
 
-    function setBlockReward(uint256 reward) public onlyOwner {
-        blockReward = reward * (10 ** decimals());
+    function _mint(address to, uint256 amount) internal {
+        balanceOf[to] += amount;
+        totalSupply += amount;
+        emit Transfer(address(0), to, amount);
     }
 
-    function destroy() public onlyOwner {
-        selfdestruct(owner);
+    function _burn(address from, uint256 amount) internal {
+        balanceOf[from] -= amount;
+        totalSupply -= amount;
+        emit Transfer(from, address(0), amount);
     }
 
-    modifier onlyOwner {
-        require(msg.sender == owner, "Only the owner can call this function");
-        _;
+    function mint(address to, uint256 amount) external {
+        _mint(to, amount);
+    }
+
+    function burn(address from, uint256 amount) external {
+        _burn(from, amount);
     }
 }

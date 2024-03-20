@@ -5,8 +5,10 @@ import { Loan } from "@/types";
 import Cookies from "js-cookie";
 import Particles from "@/sections/Particles";
 import RequestLoanModal from "@/sections/RequestLoanModal";
-import { unixToDate } from "@/utils/Helpers";
+import { convertWeiToEther, unixToDate } from "@/utils/Helpers";
 import { Navbar } from "@/sections/Hero";
+import { ethers } from "ethers";
+import { convertEtherToWei } from "@/utils/Helpers";
 export default function Home(){
     const { p2pContract, liquidityPoolContract } = useContracts();
     const [allLoans,setallLoans]=useState<Loan[]>([])
@@ -22,6 +24,23 @@ export default function Home(){
       },[])
       const handleRequestLoan=async()=>{
         showRequestLoanModal(!requestLoanModal)
+      }
+      const handleFundLoan=async(e:any)=>{
+        const lid=e.target.dataset.loanid;
+        const loanAmount=e.target.dataset.amount
+        console.log(loanAmount)
+        try {
+                    const transaction = await p2pContract!.fundLoan(
+                        Number(lid),
+                        { value: convertEtherToWei(loanAmount) }
+                    );
+                    await transaction.wait();
+                    alert('Loan funded successfully!');
+                } catch (error) {
+                    console.error(error);
+                    alert('Fund loan failed!');
+                }
+        
       }
     async function fetchAllLoans(n:any) {
           const indices = Array.from({ length: n+1 }, (_, index) => index);
@@ -96,11 +115,12 @@ export default function Home(){
                 return (
                     <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
+                    <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Final <span>{loan.borrower}</span></p>
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                     <div className="w-full flex justify-center items-center">
-                        <button className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">
-                            View More
+                        <button onClick={handleFundLoan} data-loanid={loan.loanId} data-amount={convertWeiToEther(BigInt(loan.amount))} className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">
+                            Fund Loan
                         </button>
                     </div>
                 </div>

@@ -1,9 +1,38 @@
+"use client"
+import { useContracts } from "@/contexts/ContractsContext";
+import { useEffect } from "react";
+import { Loans } from "@/types";
 export default function Home(){
+    const { p2pContract, liquidityPoolContract } = useContracts();
+    async function fetchAllLoans(n:any) {
+          const indices = Array.from({ length: n+1 }, (_, index) => index);
+              const loanPromises = indices.map(index => p2pContract?.loans(index));
+        
+          try {
+            const loans = await Promise.all(loanPromises);
+            return loans;
+          } catch (error) {
+            console.log("An error occurred while fetching loans:", error);
+          }
+        }
+        //fetching all loans
+    useEffect(()=>{
+          const f=async()=>{
+            if(!p2pContract) return
+                const loanCounter:bigint=await p2pContract?.loanCounter();
+                const data=  await fetchAllLoans(Number(loanCounter))
+                data?.shift()
+                console.log(data)
+          }
+         f()
+        },[p2pContract])
+
     return (
-        <main></main>
+        <main className="">
+
+        </main>
     )
 }
-// const { p2pContract, liquidityPoolContract } = useContracts();
 // const [loanAmount, setLoanAmount] = useState<string>('');
 // const [interestRate, setInterestRate] = useState<string>('');
 // const [loanDuration, setLoanDuration] = useState<string>('');

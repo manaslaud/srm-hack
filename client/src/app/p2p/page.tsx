@@ -1,9 +1,10 @@
 "use client"
 import { useContracts } from "@/contexts/ContractsContext";
-import { useEffect } from "react";
-import { Loans } from "@/types";
+import { useEffect, useState } from "react";
+import { Loan } from "@/types";
 export default function Home(){
     const { p2pContract, liquidityPoolContract } = useContracts();
+    const [allLoans,setallLoans]=useState<Loan[]>([])
     async function fetchAllLoans(n:any) {
           const indices = Array.from({ length: n+1 }, (_, index) => index);
               const loanPromises = indices.map(index => p2pContract?.loans(index));
@@ -15,14 +16,28 @@ export default function Home(){
             console.log("An error occurred while fetching loans:", error);
           }
         }
-        //fetching all loans
+        //fetching all loans, updating allLoans state
     useEffect(()=>{
           const f=async()=>{
             if(!p2pContract) return
                 const loanCounter:bigint=await p2pContract?.loanCounter();
                 const data=  await fetchAllLoans(Number(loanCounter))
                 data?.shift()
-                console.log(data)
+                //creating a state
+                const loans:Loan[]=[]
+                data?.map((data:any,index:number)=>{
+                    const loan:Loan={
+                        borrower:data.borrower,
+                        lender:data.lender,
+                        interestRate:Number(data.interestRate),
+                        isRepaid:data.funded,
+                        amount:Number(data.amount),
+                        dueDate:Number(data.dueDate)
+                    }
+                    loans[index]=loan;
+                })
+                setallLoans(loans)
+                console.log(loans)
           }
          f()
         },[p2pContract])

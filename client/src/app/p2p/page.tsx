@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Loan } from "@/types";
 import Cookies from "js-cookie";
 import Particles from "@/sections/Particles";
+import RequestLoanModal from "@/sections/RequestLoanModal";
 import { unixToDate } from "@/utils/Helpers";
 import { Navbar } from "@/sections/Hero";
 export default function Home(){
@@ -11,6 +12,7 @@ export default function Home(){
     const [allLoans,setallLoans]=useState<Loan[]>([])
     const [allBorrowedLoans,setallBorrowedLoans]=useState<Loan[]>([])
     const [allLendedLoans,setallLendedLoans]=useState<Loan[]>([])
+    const [requestLoanModal,showRequestLoanModal]=useState<boolean>(false);
     const userAddress=Cookies.get('currentAddress')
     const [metamaskIsConnected,setMetamaskIsConnected]=useState<boolean>(false);
     useEffect(()=>{
@@ -18,6 +20,9 @@ export default function Home(){
           setMetamaskIsConnected(true)
         }
       },[])
+      const handleRequestLoan=async()=>{
+        showRequestLoanModal(!requestLoanModal)
+      }
     async function fetchAllLoans(n:any) {
           const indices = Array.from({ length: n+1 }, (_, index) => index);
               const loanPromises = indices.map(index => p2pContract?.loans(index));
@@ -74,8 +79,15 @@ export default function Home(){
         <Particles
             className="absolute inset-0 z-10 animate-fade-in w-full"
             quantity={250}
-          />    
-        <h1 className="text-left text-white font-us w-full text-4xl">All loans</h1> 
+          />   
+                      {requestLoanModal?<RequestLoanModal/>:""}
+ 
+    <div className="w-full flex justify-between items-center z-[10000000000]">
+    <h1 className="text-left text-white font-us w-full text-4xl">All loans</h1> 
+    <button onClick={handleRequestLoan} className="px-[0.5rem] py-[0.5rem] rounded-[0.50rem] text-[0.7rem] font-us bg-blue-500">
+                                Request Loan
+                            </button>
+    </div>
         <section className="w-full flex flex-wrap z-[100000000] gap-[1rem] bg-black">
         {
             allLoans.map((loan:Loan,index:number)=>{

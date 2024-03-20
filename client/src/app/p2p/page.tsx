@@ -44,7 +44,7 @@ export default function Home(){
       }
       const handleRefundLoan=async(e:any)=>{
         const loanId=e.target.dataset.loanid;
-        const isFunded=e.target.dataset.isFunded
+        const isFunded=e.target.dataset.isfunded
         const repayAmount=e.target.dataset.amount;
         if(isFunded=="Unfunded") return;
         try {
@@ -133,7 +133,6 @@ export default function Home(){
                 return (
                     <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
-                    <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Final <span>{loan.borrower}</span></p>
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                     <div className="w-full flex justify-center items-center">
@@ -156,7 +155,7 @@ export default function Home(){
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">
-                            <button onClick={handleRefundLoan} className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500" data-loanid={loan.loanId} data-isFunded={loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Funded'} data-amount={loan.amount+ loan.amount*loan.interestRate/100}>
+                            <button onClick={handleRefundLoan} className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500" data-loanid={loan.loanId} data-isfunded={loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Funded'} data-amount={loan.amount+ loan.amount*loan.interestRate/100}>
                             {loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Refunded'}
                             </button>
                         </div>

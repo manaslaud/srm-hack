@@ -37,7 +37,7 @@ export const ContractsProvider:React.FunctionComponent<Props> = ({ children }) =
             };
             const contractAddresses = {
                 P2PAddress: '0x6fD906809D5CbD13508ed375C5771D8442Cb7a43',
-                LiquidityPoolAddress: '0xda19F47848F452628e148dcE09A6D5f8BdD433bF',
+                LiquidityPoolAddress: '0xE93A700e16fb466586781ed4A0f219262A09f947',
             };
     
             const p2pContract = new ethers.Contract(contractAddresses.P2PAddress, contractABIs.P2P.abi, signer);

@@ -28,7 +28,7 @@ export const ContractsProvider:React.FunctionComponent<Props> = ({ children }) =
                 return;
             }
     
-            const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_RPC_URL);
+            const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_SEPOLIA_URL);
             const signer = await provider.getSigner();
     
             const contractABIs = {

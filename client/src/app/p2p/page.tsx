@@ -121,7 +121,7 @@ export default function Home(){
                       {requestLoanModal?<RequestLoanModal/>:""}
  
     <div className="w-full flex justify-between items-center z-[10000000000]">
-    <h1 className="text-left text-white font-us w-full text-4xl">All loans</h1> 
+    <h1 className="text-left text-white font-us w-full text-4xl">Loans you can fund</h1> 
     <button onClick={handleRequestLoan} className="px-[0.5rem] py-[0.5rem] rounded-[0.50rem] text-[0.7rem] font-us bg-blue-500">
                                 Request Loan
                             </button>
@@ -129,7 +129,7 @@ export default function Home(){
         <section className="w-full flex flex-wrap z-[100000000] gap-[1rem] bg-black">
         {
             allLoans.map((loan:Loan,index:number)=>{
-                if(loan.lender=='0x0000000000000000000000000000000000000000')
+                if(loan.lender=='0x0000000000000000000000000000000000000000' && loan.borrower!==userAddress)
                 return (
                     <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
@@ -145,7 +145,7 @@ export default function Home(){
             })
         }
         </section>
-        <h1 className="text-left text-white font-us w-full text-4xl">Your requested loans</h1> 
+        <h1 className="text-left text-white font-us w-full text-4xl">Your loans</h1> 
         <section className="w-full flex flex-wrap z-[100000000] gap-[1rem] bg-black">
         {
             allBorrowedLoans.map((loan:Loan,index:number)=>{

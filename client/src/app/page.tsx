@@ -2,18 +2,17 @@
 import Hero from "@/sections/Hero";
 import Services from "@/sections/Services";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect,useState } from "react";
 const Home: React.FC = () => {
-  const router =useRouter()
+  const [metamaskIsConnected,setMetamaskIsConnected]=useState<boolean>(false)
   useEffect(()=>{
     if(Cookies.get('currentAddress')){
-      router.push('/p2p')
+      setMetamaskIsConnected(true)
     }
   },[])
     return (
         <main className='px-[2rem] py-[1rem] flex flex-col justify-between items-center'>
-          <Hero/>
+          <Hero isMetamaskConnected={metamaskIsConnected}/>
           <Services/>     
         </main>
     );

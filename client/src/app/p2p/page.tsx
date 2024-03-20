@@ -3,11 +3,21 @@ import { useContracts } from "@/contexts/ContractsContext";
 import { useEffect, useState } from "react";
 import { Loan } from "@/types";
 import Cookies from "js-cookie";
+import Particles from "@/sections/Particles";
 import { unixToDate } from "@/utils/Helpers";
+import { Navbar } from "@/sections/Hero";
 export default function Home(){
     const { p2pContract, liquidityPoolContract } = useContracts();
     const [allLoans,setallLoans]=useState<Loan[]>([])
+    const [allBorrowedLoans,setallBorrowedLoans]=useState<Loan[]>([])
+    const [allLendedLoans,setallLendedLoans]=useState<Loan[]>([])
     const userAddress=Cookies.get('currentAddress')
+    const [metamaskIsConnected,setMetamaskIsConnected]=useState<boolean>(false);
+    useEffect(()=>{
+        if(Cookies.get('currentAddress')){
+          setMetamaskIsConnected(true)
+        }
+      },[])
     async function fetchAllLoans(n:any) {
           const indices = Array.from({ length: n+1 }, (_, index) => index);
               const loanPromises = indices.map(index => p2pContract?.loans(index));
@@ -43,10 +53,86 @@ export default function Home(){
           }
          f()
         },[p2pContract])
+        useEffect(()=>{
+            //obtaining all borrowed loans
+            const borrowedLoans:Loan[]=[]
+            allLoans.map((loan:Loan,index:number)=>{
+                if(loan.borrower==userAddress) borrowedLoans.push(loan)
+            })
+        setallBorrowedLoans(borrowedLoans)
+            const lendedLoans:Loan[]=[]
+            allLoans.map((loan:Loan,index:number)=>{
+                if(loan.lender==userAddress) lendedLoans.push(loan)
+            })
+        setallLendedLoans(lendedLoans)
+        console.log(borrowedLoans,lendedLoans)
+        },[allLoans])
 
     return (
-        <main className="">
-
+        <main className="w-full relative h-screen flex flex-col px-[2rem] py-[1rem] gap-[1rem]">
+            <Navbar isMetamaskConnected={metamaskIsConnected}/>
+        <Particles
+            className="absolute inset-0 z-10 animate-fade-in w-full"
+            quantity={250}
+          />    
+        <h1 className="text-left text-white font-us w-full text-4xl">All loans</h1> 
+        <section className="w-full flex flex-wrap z-[100000000] gap-[1rem] bg-black">
+        {
+            allLoans.map((loan:Loan,index:number)=>{
+                return (
+                    <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
+                        <div className="w-full flex justify-center items-center">
+                            <button className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">
+                                View More
+                            </button>
+                        </div>
+                    </div>
+                )
+            })
+        }
+        </section>
+        <h1 className="text-left text-white font-us w-full text-4xl">Your requested loans</h1> 
+        <section className="w-full flex flex-wrap z-[100000000] gap-[1rem] bg-black">
+        {
+            allBorrowedLoans.map((loan:Loan,index:number)=>{
+                return (
+                    <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
+                        <div className="w-full flex justify-center items-center">
+                            <button className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">
+                                View More
+                            </button>
+                        </div>
+                    </div>
+                )
+            })
+        }
+        </section>
+        <h1 className="text-left text-white font-us w-full text-4xl">Your lended loans</h1> 
+        <section className="w-full flex flex-wrap z-[100000000] gap-[1rem] bg-black">
+        {
+            allLendedLoans.map((loan:Loan,index:number)=>{
+                return (
+                    <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
+                        <div className="w-full flex justify-center items-center">
+                            <button className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">
+                                View More
+                            </button>
+                        </div>
+                    </div>
+                )
+            })
+        }
+        </section>
+        
         </main>
     )
 }

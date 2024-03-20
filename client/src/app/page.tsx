@@ -1,7 +1,9 @@
 "use client"
+import Footer from "@/sections/Footer";
 import Hero from "@/sections/Hero";
 import Services from "@/sections/Services";
 import Cookies from "js-cookie";
+
 import { useEffect,useState } from "react";
 const Home: React.FC = () => {
   const [metamaskIsConnected,setMetamaskIsConnected]=useState<boolean>(false)
@@ -13,7 +15,8 @@ const Home: React.FC = () => {
     return (
         <main className='px-[2rem] py-[1rem] flex flex-col justify-between items-center'>
           <Hero isMetamaskConnected={metamaskIsConnected}/>
-          <Services/>     
+          <Services/> 
+          <Footer/>    
         </main>
     );
 }

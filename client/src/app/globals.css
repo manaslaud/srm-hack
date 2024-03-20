@@ -31,3 +31,21 @@ body {
     text-wrap: balance;
   }
 }
+@font-face { 
+  font-family: us; 
+  src: url('/fonts/us.otf') format("opentype")
+} 
+@font-face { 
+  font-family: ptMono; 
+  src: url('/fonts/PTMono-Regular.ttf') format("truetype")
+} 
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

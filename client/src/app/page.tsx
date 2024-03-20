@@ -6,6 +6,12 @@ import Cookies from "js-cookie";
 
 import { useEffect,useState } from "react";
 const Home: React.FC = () => {
+  window.ethereum.on("accountsChanged",()=>{
+    window.location.reload();
+  })
+  window.ethereum.on("chainChanged",()=>{
+    window.location.reload();
+  })
   const [metamaskIsConnected,setMetamaskIsConnected]=useState<boolean>(false)
   useEffect(()=>{
     if(Cookies.get('currentAddress')){

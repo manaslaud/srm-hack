@@ -10,6 +10,12 @@ import { Navbar } from "@/sections/Hero";
 import { ethers } from "ethers";
 import { convertEtherToWei } from "@/utils/Helpers";
 export default function Home(){
+    window.ethereum.on("accountsChanged",()=>{
+        window.location.reload();
+      })
+      window.ethereum.on("chainChanged",()=>{
+        window.location.reload();
+      })
     const { p2pContract, liquidityPoolContract } = useContracts();
     const [allLoans,setallLoans]=useState<Loan[]>([])
     const [allBorrowedLoans,setallBorrowedLoans]=useState<Loan[]>([])

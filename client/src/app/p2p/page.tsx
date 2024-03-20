@@ -42,6 +42,24 @@ export default function Home(){
                 }
         
       }
+      const handleRefundLoan=async(e:any)=>{
+        const loanId=e.target.dataset.loanid;
+        const isFunded=e.target.dataset.isFunded
+        const repayAmount=e.target.dataset.amount;
+        if(isFunded=="Unfunded") return;
+        try {
+                    const transaction = await p2pContract!.repayLoan(
+                        Number(loanId),
+                        { value: (repayAmount) }
+                    );
+                    await transaction.wait();
+                    alert('Loan repaid successfully!');
+                } catch (error) {
+                    console.error(error);
+                    alert('Repay loan failed!');
+                }
+
+      }
     async function fetchAllLoans(n:any) {
           const indices = Array.from({ length: n+1 }, (_, index) => index);
               const loanPromises = indices.map(index => p2pContract?.loans(index));
@@ -138,8 +156,8 @@ export default function Home(){
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">
-                            <button className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">
-                                View More
+                            <button onClick={handleRefundLoan} className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500" data-loanid={loan.loanId} data-isFunded={loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Funded'} data-amount={loan.amount+ loan.amount*loan.interestRate/100}>
+                            {loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Refunded'}
                             </button>
                         </div>
                     </div>

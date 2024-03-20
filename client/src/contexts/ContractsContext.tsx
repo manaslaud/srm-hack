@@ -3,8 +3,8 @@
 import * as React from "react";
 import { createContext, useContext, useEffect, useState } from 'react';
 import { ethers,Contract } from 'ethers';
-import data1 from '../app/artifacts/contracts/LiquidityPool.sol/AMMLiquidityPool.json' 
-import data2 from '../app/artifacts/contracts/LiquidityPool.sol/AMMLiquidityPool.json'
+import data1 from '../app/artifacts/contracts/PeerToPeerLending.sol/PeerToPeerLending.json' 
+import data2 from '../app/artifacts/contracts/LiquidityPool.sol/LiquidityPoolWithInterest.json'
 interface Props{
     children:React.ReactNode
 }

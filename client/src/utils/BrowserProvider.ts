@@ -10,7 +10,10 @@ export const checkMetamaskAndEth=()=>{
       }
 }
 export async function getSigner() {
+  if(!window.ethereum) {
+  alert('Need eth support')
+return;}
     await window.ethereum.request({ method: 'eth_requestAccounts' });
     const web3Provider = new ethers.BrowserProvider(window.ethereum);
-    return web3Provider.getSigner();
+    return await web3Provider.getSigner();
 }

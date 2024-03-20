@@ -27,8 +27,8 @@ export const ContractsProvider:React.FunctionComponent<Props> = ({ children }) =
                 alert('MetaMask support is needed');
                 return;
             }
-    
-            const provider = new ethers.JsonRpcProvider(process.env.NEXT_PUBLIC_SEPOLIA_URL);
+            console.log(process.env.NEXT_PUBLIC_SEPOLIA_URL)
+            const provider = new ethers.BrowserProvider(window.ethereum);
             const signer = await provider.getSigner();
     
             const contractABIs = {

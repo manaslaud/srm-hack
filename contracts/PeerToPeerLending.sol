@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-//DEPLOYED AT 0x9dd5bB3A55A7b3b67599495A969E345b53680D4F
+//DEPLOYED AT 0x6fD906809D5CbD13508ed375C5771D8442Cb7a43
 contract PeerToPeerLending {
     struct Loan {
         address borrower;

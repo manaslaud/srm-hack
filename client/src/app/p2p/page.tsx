@@ -189,7 +189,7 @@ export default function Home(){
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">
                             <button className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">
-                                View More
+                                {loan.isRepaid?'Repaid':'Not yet repaid'}
                             </button>
                         </div>
                     </div>

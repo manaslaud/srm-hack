@@ -156,7 +156,7 @@ export default function Home(){
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">
                             <button onClick={handleRefundLoan} className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500" data-loanid={loan.loanId} data-isfunded={loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Funded'} data-amount={loan.amount+ loan.amount*loan.interestRate/100}>
-                            {loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Refunded'}
+                            {loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Refund'}
                             </button>
                         </div>
                     </div>

@@ -11,7 +11,7 @@ contract PeerToPeerLending {
         bool funded;
     }
 
-    uint public loanCounter;
+    uint public loanCounter=0;
     mapping(uint => Loan) public loans;
 
     event LoanRequested(uint loanId, address borrower, uint amount, uint interestRate, uint dueDate);
@@ -43,11 +43,56 @@ contract PeerToPeerLending {
         require(msg.value >= repaymentAmount, "Insufficient amount to repay the loan");
         payable(loans[_loanId].lender).transfer(repaymentAmount);
         emit RepaymentMade(_loanId, repaymentAmount);
-        // Ideally, handle overpayment refund and mark loan as repaid in a real scenario
-    }
+/*         // Ideally, handle overpayment refund and mark loan as repaid in a real scenario
+ */    }
 
     // View loan details
-    function getLoanDetails(uint _loanId) public view returns (Loan memory) {
-        return loans[_loanId];
+    // Corrected version to return details of all borrowed loans for a given borrower
+function getAllBorrowedLoans(address borrower) public view returns (Loan[] memory) {
+    uint count = 0;
+
+    // First, count the relevant loans to size the array correctly
+    for (uint i = 1; i <= loanCounter; i++) {
+        if (loans[i].borrower == borrower) {
+            count++;
+        }
     }
+
+    Loan[] memory borrowedLoans = new Loan[](count);
+    uint k = 0; // Corrected indexing to start at 0
+
+    // Populate the array
+    for (uint i = 1; i <= loanCounter; i++) {
+        if (loans[i].borrower == borrower) {
+            borrowedLoans[k] = loans[i];
+            k++;
+        }
+    }
+
+    return borrowedLoans; // Return the populated array of loans
+}
+function getAllLendingLoans(address lender) public view returns (Loan[] memory) {
+    uint count = 0;
+
+    // First, count the relevant loans to size the array correctly
+    for (uint i = 1; i <= loanCounter; i++) {
+        if (loans[i].lender == lender) {
+            count++;
+        }
+    }
+
+    Loan[] memory lenderLoans = new Loan[](count);
+    uint k = 0; // Corrected indexing to start at 0
+
+    // Populate the array
+    for (uint i = 1; i <= loanCounter; i++) {
+        if (loans[i].lender == lender) {
+            lenderLoans[k] = loans[i];
+            k++;
+        }
+    }
+
+    return lenderLoans; // Return the populated array of loans
+}
+
 }

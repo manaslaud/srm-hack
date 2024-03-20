@@ -100,7 +100,7 @@ export default function Home(){
             allBorrowedLoans.map((loan:Loan,index:number)=>{
                 return (
                     <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
-                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan given by: <span>{loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':loan.lender}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">

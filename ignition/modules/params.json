@@ -1,0 +1,8 @@
+{
+    "ERC20": {
+      "_name": "MT_Localhost",
+      "_symbol":"MT_L",
+      "_decimals":"18"
+    }
+  }
+  

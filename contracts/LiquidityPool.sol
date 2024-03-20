@@ -1,4 +1,5 @@
 // SPDX-License-Identifier: MIT
+//0xD2575a51B5E8d905E17b00eDeC2e40c977216C44
 pragma solidity ^0.8.0;
 
 import "./IERC20.sol";
@@ -23,7 +24,7 @@ contract LiquidityPoolWithInterest is ReentrancyGuard {
     event Withdrawn(address indexed user, uint256 ethAmount, uint256 mtAmount);
 
     constructor() {
-        mtToken = IMTToken(0x45f0118A78A03CEE83d82E0C8C5Fa1579543EB67);
+        mtToken = IMTToken(0x9F25782aA2f077b0A0485ABbf42Be36733140FAB);
     }
 
     function depositETH() external payable nonReentrant {

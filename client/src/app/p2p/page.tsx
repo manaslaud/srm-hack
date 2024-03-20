@@ -7,15 +7,23 @@ import Particles from "@/sections/Particles";
 import RequestLoanModal from "@/sections/RequestLoanModal";
 import { convertWeiToEther, unixToDate } from "@/utils/Helpers";
 import { Navbar } from "@/sections/Hero";
-import { ethers } from "ethers";
 import { convertEtherToWei } from "@/utils/Helpers";
+import { getSigner } from "@/utils/BrowserProvider";
 export default function Home(){
-    window.ethereum.on("accountsChanged",()=>{
-        window.location.reload();
-      })
-      window.ethereum.on("chainChanged",()=>{
-        window.location.reload();
-      })
+    useEffect(()=>{
+        window.ethereum.on("accountsChanged",async()=>{
+            window.location.reload();
+            const acc=await getSigner()
+            if(acc)
+            Cookies.set('currentAddress',acc?.address)
+          })
+          window.ethereum.on("chainChanged",async()=>{
+            window.location.reload();
+            const acc=await getSigner()
+            if(acc)
+            Cookies.set('currentAddress',acc?.address)
+          })
+    },[])
     const { p2pContract, liquidityPoolContract } = useContracts();
     const [allLoans,setallLoans]=useState<Loan[]>([])
     const [allBorrowedLoans,setallBorrowedLoans]=useState<Loan[]>([])

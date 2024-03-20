@@ -15,6 +15,6 @@ module.exports = {
     }
   },
   paths: {
-    artifacts: "./client/src/artifacts",
+    artifacts: "./client/src/app/artifacts",
   },
 };

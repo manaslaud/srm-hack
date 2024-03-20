@@ -1,8 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
-
 import "./IERC20.sol";
-
+//sepolia deployed at 0x45f0118A78A03CEE83d82E0C8C5Fa1579543EB67 
 contract ERC20 is IERC20 {
     // event Transfer(address indexed from, address indexed to, uint256 value);
     // event Approval(

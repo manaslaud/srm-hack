@@ -50,7 +50,8 @@ export default function Home(){
                         interestRate:Number(data.interestRate),
                         isRepaid:data.funded,
                         amount:Number(data.amount),
-                        dueDate:Number(data.dueDate)
+                        dueDate:Number(data.dueDate),
+                        loanId:index+1
                     }
                     loans[index]=loan;
                 })

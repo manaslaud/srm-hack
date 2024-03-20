@@ -4,5 +4,6 @@ export interface Loan{
     amount:number,
     interestRate:number,
     dueDate:number,
-    isRepaid:boolean
+    isRepaid:boolean,
+    loanId:number
 }

@@ -2,6 +2,7 @@
 import { useContracts } from "@/contexts/ContractsContext";
 import { useEffect, useState } from "react";
 import { Loan } from "@/types";
+import { unixToDate } from "@/utils/Helpers";
 export default function Home(){
     const { p2pContract, liquidityPoolContract } = useContracts();
     const [allLoans,setallLoans]=useState<Loan[]>([])
@@ -37,7 +38,6 @@ export default function Home(){
                     loans[index]=loan;
                 })
                 setallLoans(loans)
-                console.log(loans)
           }
          f()
         },[p2pContract])

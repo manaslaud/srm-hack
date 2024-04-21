@@ -109,7 +109,7 @@ export default function Home(){
                 setallLoans(loans)
           }
          f()
-        },[])
+        },[p2pContract])
         useEffect(()=>{
             //obtaining all borrowed loans
             const borrowedLoans:Loan[]=[]

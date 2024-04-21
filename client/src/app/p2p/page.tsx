@@ -124,7 +124,7 @@ export default function Home(){
             })
         setallLendedLoans(lendedLoans)
         console.log(borrowedLoans,lendedLoans,allLoans)
-        },[])
+        },[allLoans])
 
     return (
         <main className="w-full relative h-screen flex flex-col laptop:px-[2rem] mobile:px-[1rem] py-[1rem] gap-[1rem]">
@@ -160,7 +160,7 @@ export default function Home(){
             })
         }
         </section>
-        <h1 className="text-left text-white font-us w-full text-4xl">Your borrowed loans</h1> 
+        <h1 className="text-left text-white font-us w-full text-4xl">Your loans</h1> 
         <section className="w-full flex flex-wrap z-[100000000] gap-[1rem] bg-black">
         {
             allBorrowedLoans.map((loan:Loan,index:number)=>{

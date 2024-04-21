@@ -109,24 +109,25 @@ export default function Home(){
                 setallLoans(loans)
           }
          f()
-        },[p2pContract])
+        },[])
         useEffect(()=>{
             //obtaining all borrowed loans
             const borrowedLoans:Loan[]=[]
             allLoans.map((loan:Loan,index:number)=>{
                 if(loan.borrower==userAddress) borrowedLoans.push(loan)
             })
+        
         setallBorrowedLoans(borrowedLoans)
             const lendedLoans:Loan[]=[]
             allLoans.map((loan:Loan,index:number)=>{
                 if(loan.lender==userAddress) lendedLoans.push(loan)
             })
         setallLendedLoans(lendedLoans)
-        console.log(borrowedLoans,lendedLoans)
-        },[allLoans])
+        console.log(borrowedLoans,lendedLoans,allLoans)
+        },[])
 
     return (
-        <main className="w-full relative h-screen flex flex-col px-[2rem] py-[1rem] gap-[1rem]">
+        <main className="w-full relative h-screen flex flex-col laptop:px-[2rem] mobile:px-[1rem] py-[1rem] gap-[1rem]">
             <Navbar isMetamaskConnected={metamaskIsConnected}/>
         <Particles
             className="absolute inset-0 z-10 animate-fade-in w-full"
@@ -145,12 +146,12 @@ export default function Home(){
             allLoans.map((loan:Loan,index:number)=>{
                 if(loan.lender=='0x0000000000000000000000000000000000000000' && loan.borrower!==userAddress)
                 return (
-                    <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
-                    <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
+                    <div key={index} className="flex flex-col laptop:w-[30.33%] mobile:w-[45%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
+                    <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower.substring(0,10)}...</span></p>
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                     <div className="w-full flex justify-center items-center">
-                        <button onClick={handleFundLoan} data-loanid={loan.loanId} data-amount={convertWeiToEther(BigInt(loan.amount))} className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">
+                        <button onClick={handleFundLoan} data-loanid={loan.loanId} data-amount={convertWeiToEther(BigInt(loan.amount))} className=" mobile:px-[0.4rem] laptop:px-[1rem] py-[0.5rem] rounded-[0.50rem] mobile:text-[.6rem] laptop:text-[0.8rem] font-us bg-blue-500">
                             Fund Loan
                         </button>
                     </div>
@@ -159,13 +160,13 @@ export default function Home(){
             })
         }
         </section>
-        <h1 className="text-left text-white font-us w-full text-4xl">Your loans</h1> 
+        <h1 className="text-left text-white font-us w-full text-4xl">Your borrowed loans</h1> 
         <section className="w-full flex flex-wrap z-[100000000] gap-[1rem] bg-black">
         {
             allBorrowedLoans.map((loan:Loan,index:number)=>{
                 return (
-                    <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
-                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan given by: <span>{loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':loan.lender}</span></p>
+                    <div key={index} className="flex flex-col laptop:w-[30.33%] mobile:w-[45%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan given by: <span>{loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':loan.lender.substring(0,10)}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">
@@ -183,8 +184,8 @@ export default function Home(){
         {
             allLendedLoans.map((loan:Loan,index:number)=>{
                 return (
-                    <div key={index} className="flex flex-col w-[30.33%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
-                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower}</span></p>
+                    <div key={index} className="flex flex-col laptop:w-[30.33%] mobile:w-[45%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower.substring(0,10)}...</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">

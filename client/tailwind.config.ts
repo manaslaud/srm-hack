@@ -21,6 +21,11 @@ const config: Config = {
         
       },
     },
+    screens:{
+      mobile:'320px',
+      tablet:'728px',
+      laptop:'1024px'
+    }
   },
   plugins: [],
 };

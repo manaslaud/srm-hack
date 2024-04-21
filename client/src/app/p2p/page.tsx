@@ -148,6 +148,8 @@ export default function Home(){
                 return (
                     <div key={index} className="flex flex-col laptop:w-[30.33%] mobile:w-[45%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower.substring(0,10)}...</span></p>
+                    <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Amount: <span>{convertWeiToEther(BigInt(loan.amount))}</span></p>
+
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
                     <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                     <div className="w-full flex justify-center items-center">
@@ -168,6 +170,8 @@ export default function Home(){
                     <div key={index} className="flex flex-col laptop:w-[30.33%] mobile:w-[45%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan given by: <span>{loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':loan.lender.substring(0,10)}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Amount: <span>{convertWeiToEther(BigInt(loan.amount))}</span></p>
+
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">
                             <button onClick={handleRefundLoan} className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500" data-loanid={loan.loanId} data-isfunded={loan.lender==='0x0000000000000000000000000000000000000000'?'Unfunded':'Funded'} data-amount={loan.amount+ loan.amount*loan.interestRate/100}>
@@ -187,6 +191,7 @@ export default function Home(){
                     <div key={index} className="flex flex-col laptop:w-[30.33%] mobile:w-[45%] justify-center items-center  border-[1px] font-ptMono border-[#0f0f0f] rounded-[1rem] py-[0.5rem]">
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem]">Loan Request by: <span>{loan.borrower.substring(0,10)}...</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Interest Rate: <span>{loan.interestRate}</span></p>
+                        <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Amount: <span>{convertWeiToEther(BigInt(loan.amount))}</span></p>
                         <p className="px-[1rem] py-[0.75rem] text-[0.80rem] w-full">Due date: <span>{unixToDate(loan.dueDate).toLocaleString()}</span></p>
                         <div className="w-full flex justify-center items-center">
                             <button className="px-[1rem] py-[0.5rem] rounded-[0.50rem] text-[0.8rem] font-us bg-blue-500">

@@ -46,7 +46,7 @@ export function Navbar(props:HeroProps){
                 {/* <div className="">Logo</div> */}
                 <Image className="cursor-pointer" width={100} height={100} src={'/logo.svg'} alt="Logo"/>
                 {props.isMetamaskConnected?(<div className="w-[40%] flex justify-between items-center text-[0.9rem] cursor-pointer">
-                    <p className="font-us">Wallet:{Cookies.get('currentAddress')}</p>
+                    <p className="font-us w-full text-right">Wallet:{Cookies.get('currentAddress')}</p>
                 </div>):(<div className="w-[20%] flex justify-between items-center text-[0.9rem] cursor-pointer">
                     <Link href={'/#home'}><span>Home</span></Link>          
                     <Link href={'/#services'}><span>Services</span></Link>

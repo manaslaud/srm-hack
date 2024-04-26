@@ -7,6 +7,7 @@ const RequestLoanModal:React.FunctionComponent=()=>{
     const [interest,setInterest]=useState<string>('')
     const [duration,setDuration]=useState<string>('')
     const {p2pContract}=useContracts()
+
     const handleSubmit=async(formData:any)=>{
         formData.preventDefault()
         console.log(formData)
@@ -19,7 +20,7 @@ const RequestLoanModal:React.FunctionComponent=()=>{
         <main className="top-0 w-[75%] flex flex-col gap-[1rem] justify-center items-center z-[1000000000] left-[50%] translate-x-[15%] bg-[#0f0f0f] px-[1rem] py-[0.3rem] font-us rounded-[10px]">
             <div className="w-full flex flex-col justify-center items-center">
             <h1 className="text-center text-white font-us w-full text-3xl">Request a loan</h1> 
-        <p className="font-ptMono">Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate ducimus tempore minus officiis?</p>
+        <p className="font-ptMono">Enter loan amount (in ether), interest rate and loan duration in days</p>
             <form onSubmit={handleSubmit} >
             <div className="w-full flex gap-[1rem] justify-center items-center flex-col">
         <div className="flex flex-col gap-[1rem] justify-center items-start">

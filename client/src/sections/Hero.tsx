@@ -8,10 +8,6 @@ import Cookies from "js-cookie"
 interface HeroProps{
     isMetamaskConnected:boolean;
 }
-interface NavbarProps{
-    isMetamaskConnected:boolean;
-
-}
 export default function Hero(props:HeroProps){
     const router=useRouter()
     async function handleCLick(){
@@ -28,7 +24,7 @@ export default function Hero(props:HeroProps){
         <Navbar isMetamaskConnected={props.isMetamaskConnected}/>
         <Particles
             className="absolute inset-0 z-10 animate-fade-in w-full"
-            quantity={250}
+            quantity={1050}
           />
           <div className="flex text-white absolute text-5xl top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]  font-us align-middle justify-center items-center flex-col z-[1000000000000000] gap-[0.5rem]">
 <p className="text-center">Simplifying loading in the <br /> DeFi world <span className="bg-gradient-to-r from-indigo-700 via-purple-300 to-pink-400 bg-clip-text text-transparent">BoltShift.</span>

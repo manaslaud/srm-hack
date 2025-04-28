@@ -1,5 +1,4 @@
-### Simplifying loading in the
-DeFi world
+### Simplifying loading in the DeFi world
 
 ## Services 
 Decentralized Lending: Experience the future of lending with Boltshift's fully decentralized platform. Our blockchain-based system eliminates the need for traditional financial intermediaries, allowing for secure and transparent peer-to-peer transactions.

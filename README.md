@@ -1,13 +1,7 @@
-# Sample Hardhat Project
+### Simplifying loading in the
+DeFi world
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a Hardhat Ignition module that deploys that contract.
+## Services 
+Decentralized Lending: Experience the future of lending with Boltshift's fully decentralized platform. Our blockchain-based system eliminates the need for traditional financial intermediaries, allowing for secure and transparent peer-to-peer transactions.
 
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat ignition deploy ./ignition/modules/Lock.ts
-```
+Automated Smart Contracts: Enjoy the security of automated smart contracts that ensure all terms are met before funds are exchanged. Our contracts are transparent, tamper-proof, and designed to protect both lenders and borrowers.
